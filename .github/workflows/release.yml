@@ -4,7 +4,7 @@ on:
     tags:
       - "*"
 jobs:
-  android:
+  release:
     runs-on: ubuntu-latest
     steps:
       - id: get_tag
