@@ -1,8 +1,10 @@
 {
     "name": "firebase-verifier",
+    "main": "index.js",
     "description": "Expressjs Middleware for firebase authentication and app check when you don't want to install firebase admin sdk",
     "version": "0.0.1",
     "scripts": {
+        "clean": "rm -rf *.js *.d.ts package firebase-verifier*.tgz",
         "build": "esbuild index.ts --outfile=index.js --bundle --minify --platform=node && tsc index.ts --declaration --emitDeclarationOnly"
     },
     "devDependencies": {
@@ -15,5 +17,9 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/chientrm/firebase-verifier.git"
-    }
+    },
+    "files": [
+        "index.js",
+        "index.d.ts"
+    ]
 }
