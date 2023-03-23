@@ -1,0 +1,14 @@
+{
+    "name": "firebase-verifier",
+    "description": "Expressjs Middleware for firebase authentication and app check when you don't want to install firebase admin sdk",
+    "scripts": {
+        "build": "esbuild index.ts --outfile=index.js --sourcemap --bundle --minify --platform=node"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.17",
+        "esbuild": "^0.17.12",
+        "http-status-codes": "^2.2.0",
+        "jose": "^4.13.1",
+        "node-fetch": "^3.3.1"
+    }
+}
