@@ -44,7 +44,14 @@ const app = express();
 // Verify Id token
 app.use(authVerifier(project_id));
 app.get("/", (req, res) => {
-  const user = res.locals.user; // user: JWTPayload
+  console.log(res.locals.user);
+  /* Output
+    {
+      "sub": "kxljssoieeJKLe",
+      "email": "chientrm@gmail.com",
+      ...
+    }
+  */
 });
 
 ...
@@ -52,7 +59,12 @@ app.get("/", (req, res) => {
 // Verify App Check token
 app.use(appCheckVerifier({ project_id, project_no }));
 app.get("/", (req, res) => {
-  const device = res.locals.device; // device: JWTPayload
+  console.log(res.locals.device);
+  /* Output
+    {
+      ...
+    }
+  */
 });
 
 ...
@@ -60,8 +72,8 @@ app.get("/", (req, res) => {
 // Verify both Id token and App Check token
 app.use(firebaseVerifier({ project_id, project_no }));
 app.get("/", (req, res) => {
-  const user = res.locals.user; // user: JWTPayload
-  const device = res.locals.device; // device: JWTPayload
+  console.log(res.locals.user);
+  console.log(res.locals.device);
 });
 
 app.listen(3000);
