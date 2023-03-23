@@ -1,4 +1,4 @@
-# Firebase verifier middleware for `expressjs`
+# `firebase-verifier` middleware for `expressjs`
 
 When you don't want to install `firebase-admin-sdk` just to verify `id token` and/or `app check token`.
 
