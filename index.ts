@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 import {
   createRemoteJWKSet,
   decodeProtectedHeader,
@@ -49,48 +48,36 @@ const forIdTokenPublicKeys = fetch(
   authVerifier =
     (project_id: string) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const authorization = req.header("Authorization")!,
-          idToken = authorization.split(" ")[1],
-          user = await verifyIdToken({ idToken, project_id });
-        res.locals.user = user;
-        next();
-      } catch (e) {
-        res.sendStatus(StatusCodes.UNAUTHORIZED);
-      }
+      const authorization = req.header("Authorization")!,
+        idToken = authorization.split(" ")[1],
+        user = await verifyIdToken({ idToken, project_id });
+      res.locals.user = user;
+      next();
     },
   appCheckVerifier =
     ({ project_no, project_id }: { project_id: string; project_no: string }) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const appCheckToken = req.header("X-Firebase-AppCheck")!,
-          device = await verifyAppCheckToken({
-            appCheckToken,
-            project_no,
-            project_id,
-          });
-        res.locals.device = device;
-        next();
-      } catch (e) {
-        res.sendStatus(StatusCodes.UNAUTHORIZED);
-      }
+      const appCheckToken = req.header("X-Firebase-AppCheck")!,
+        device = await verifyAppCheckToken({
+          appCheckToken,
+          project_no,
+          project_id,
+        });
+      res.locals.device = device;
+      next();
     },
   firebaseVerifier =
     ({ project_no, project_id }: { project_id: string; project_no: string }) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const authorization = req.header("Authorization")!,
-          idToken = authorization.split(" ")[1],
-          appCheckToken = req.header("X-Firebase-AppCheck")!,
-          [user, device] = await Promise.all([
-            verifyIdToken({ idToken, project_id }),
-            verifyAppCheckToken({ appCheckToken, project_no, project_id }),
-          ]);
-        res.locals.user = user;
-        res.locals.device = device;
-        next();
-      } catch (e) {
-        res.sendStatus(StatusCodes.UNAUTHORIZED);
-      }
+      const authorization = req.header("Authorization")!,
+        idToken = authorization.split(" ")[1],
+        appCheckToken = req.header("X-Firebase-AppCheck")!,
+        [user, device] = await Promise.all([
+          verifyIdToken({ idToken, project_id }),
+          verifyAppCheckToken({ appCheckToken, project_no, project_id }),
+        ]);
+      res.locals.user = user;
+      res.locals.device = device;
+      next();
     };
 export { authVerifier, appCheckVerifier, firebaseVerifier };
