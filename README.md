@@ -9,7 +9,7 @@
 [![Download](https://img.shields.io/npm/dt/@chientrm/firebase-verifier)](https://www.npmjs.com/package/@chientrm/firebase-verifier)
 [![Sponsors](https://img.shields.io/github/sponsors/chientrm)](https://github.com/chientrm)
 [![Issues](https://img.shields.io/github/issues/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier/issues)
-[![License](https://img.shields.io/npm/l/@chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/firebase-verifier)](https://github.com/chientrm/firebase-verifier/blob/main/LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier)
 [![Contributors](https://img.shields.io/github/contributors/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier/graphs/contributors)
 
