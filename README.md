@@ -14,8 +14,6 @@ Obtains `project_id` and `project_no` from [Google Cloud Console](https://consol
 
 ## Usage
 
-### Initialize app:
-
 ```ts
 import express from "express";
 import {
