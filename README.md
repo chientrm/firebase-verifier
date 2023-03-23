@@ -21,7 +21,7 @@ When you don't want to install `firebase-admin-sdk` just to verify `id token` an
 npm install firebase-verifier
 ```
 
-## Config
+## Configs
 
 Obtains `project_id` and `project_no` from [Google Cloud Console](https://console.cloud.google.com)
 
