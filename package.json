@@ -19,6 +19,6 @@
         "url": "git+https://github.com/chientrm/firebase-verifier.git"
     },
     "files": [
-        "dist"
+        "dist/index.js"
     ]
 }
