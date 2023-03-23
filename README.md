@@ -11,6 +11,7 @@
 [![Issues](https://img.shields.io/github/issues/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier/issues)
 [![License](https://img.shields.io/npm/l/firebase-verifier)](https://github.com/chientrm/firebase-verifier/blob/main/LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier)
+[![Contributors](https://img.shields.io/npm/v/firebase-verifier)](https://www.npmjs.com/package/firebase-verifier)
 [![Contributors](https://img.shields.io/github/contributors/chientrm/firebase-verifier)](https://github.com/chientrm/firebase-verifier/graphs/contributors)
 
 When you don't want to install `firebase-admin-sdk` just to verify `id token` and/or `app check token`.
