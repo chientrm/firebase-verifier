@@ -15,19 +15,19 @@ const forIdTokenPublicKeys = fetch(
   appCheckJWKS = createRemoteJWKSet(
     new URL("https://firebaseappcheck.googleapis.com/v1beta/jwks")
   ),
-  verifyIdToken = (idToken: string, project_no: string) =>
-    Promise.all([decodeProtectedHeader(idToken), forIdTokenPublicKeys])
+  verifyIdToken = (jwt: string, project_no: string) =>
+    Promise.all([decodeProtectedHeader(jwt), forIdTokenPublicKeys])
       .then(([header, publicKeys]) => publicKeys[header.kid!])
       .then((certificate) => importX509(certificate, "RS256"))
       .then((key) =>
-        jwtVerify(idToken, key, {
+        jwtVerify(jwt, key, {
           issuer: `https://securetoken.google.com/${project_no}`,
           audience: project_no,
         })
       )
       .then((result) => result.payload),
-  verifyAppCheckToken = (appCheckToken: string, project_no: string) =>
-    jwtVerify(appCheckToken, appCheckJWKS, {
+  verifyAppCheckToken = (jwt: string, project_no: string) =>
+    jwtVerify(jwt, appCheckJWKS, {
       issuer: `https://firebaseappcheck.googleapis.com/${project_no}`,
       audience: `projects/${project_no}`,
     }).then((res) => res.payload),
@@ -35,16 +35,16 @@ const forIdTokenPublicKeys = fetch(
     (project_no: string) =>
     async (req: Request, res: Response, next: NextFunction) => {
       const authorization = req.header("Authorization")!,
-        idToken = authorization.split(" ")[1],
-        user = await verifyIdToken(idToken, project_no);
+        jwt = authorization.split(" ")[1],
+        user = await verifyIdToken(jwt, project_no);
       res.locals.user = user;
       next();
     },
   appCheckVerifier =
     (project_no: string) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      const appCheckToken = req.header("X-Firebase-AppCheck")!,
-        device = await verifyAppCheckToken(appCheckToken, project_no);
+      const jwt = req.header("X-Firebase-AppCheck")!,
+        device = await verifyAppCheckToken(jwt, project_no);
       res.locals.device = device;
       next();
     },

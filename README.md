@@ -24,7 +24,7 @@ npm install firebase-verifier
 
 ## Configs
 
-Obtains `project_id` and `project_no` from [Google Cloud Console](https://console.cloud.google.com)
+Obtains `project_no` from [Google Cloud Console](https://console.cloud.google.com)
 
 ## Usage
 
@@ -36,13 +36,12 @@ import {
   firebaseVerifier,
 } from "firebase-verifier";
 
-const project_id = "<project_id>";
 const project_no = "<project_no>";
 
 const app = express();
 
 // Verify Id token
-app.use(authVerifier(project_id));
+app.use(authVerifier(project_no));
 app.get("/", (req, res) => {
   console.log(res.locals.user);
   /* Output
@@ -57,7 +56,7 @@ app.get("/", (req, res) => {
 ...
 
 // Verify App Check token
-app.use(appCheckVerifier({ project_id, project_no }));
+app.use(appCheckVerifier(project_no));
 app.get("/", (req, res) => {
   console.log(res.locals.device);
   /* Output
@@ -70,7 +69,7 @@ app.get("/", (req, res) => {
 ...
 
 // Verify both Id token and App Check token
-app.use(firebaseVerifier({ project_id, project_no }));
+app.use(firebaseVerifier(project_no));
 app.get("/", (req, res) => {
   console.log(res.locals.user);
   console.log(res.locals.device);
