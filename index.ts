@@ -15,14 +15,14 @@ const forIdTokenPublicKeys = fetch(
   appCheckJWKS = createRemoteJWKSet(
     new URL("https://firebaseappcheck.googleapis.com/v1beta/jwks")
   ),
-  verifyIdToken = (jwt: string, project_no: string) =>
+  verifyIdToken = (jwt: string, project_id: string) =>
     Promise.all([decodeProtectedHeader(jwt), forIdTokenPublicKeys])
       .then(([header, publicKeys]) => publicKeys[header.kid!])
       .then((certificate) => importX509(certificate, "RS256"))
       .then((key) =>
         jwtVerify(jwt, key, {
-          issuer: `https://securetoken.google.com/${project_no}`,
-          audience: project_no,
+          issuer: `https://securetoken.google.com/${project_id}`,
+          audience: project_id,
         })
       )
       .then((result) => result.payload),
@@ -49,13 +49,13 @@ const forIdTokenPublicKeys = fetch(
       next();
     },
   firebaseVerifier =
-    (project_no: string) =>
+    ({ project_id, project_no }: { project_id: string; project_no: string }) =>
     async (req: Request, res: Response, next: NextFunction) => {
       const authorization = req.header("Authorization")!,
         idToken = authorization.split(" ")[1],
         appCheckToken = req.header("X-Firebase-AppCheck")!,
         [user, device] = await Promise.all([
-          verifyIdToken(idToken, project_no),
+          verifyIdToken(idToken, project_id),
           verifyAppCheckToken(appCheckToken, project_no),
         ]);
       res.locals.user = user;
