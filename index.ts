@@ -40,8 +40,8 @@ const forIdTokenPublicKeys = fetch(
           user = await verifyIdToken(jwt, project_no);
         res.locals.user = user;
         next();
-      } catch (_) {
-        res.sendStatus(401);
+      } catch (e) {
+        res.locals.error = e;
       }
     },
   appCheckVerifier =
@@ -52,8 +52,8 @@ const forIdTokenPublicKeys = fetch(
           device = await verifyAppCheckToken(jwt, project_no);
         res.locals.device = device;
         next();
-      } catch (_) {
-        res.sendStatus(401);
+      } catch (e) {
+        res.locals.error = e;
       }
     },
   firebaseVerifier =
@@ -70,8 +70,8 @@ const forIdTokenPublicKeys = fetch(
         res.locals.user = user;
         res.locals.device = device;
         next();
-      } catch (_) {
-        res.sendStatus(401);
+      } catch (e) {
+        res.locals.error = e;
       }
     };
 export { authVerifier, appCheckVerifier, firebaseVerifier };
