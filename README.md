@@ -78,3 +78,5 @@ app.get("/", (req, res) => {
 
 app.listen(3000);
 ```
+
+**If any of the verifiers fail, it auto send status 401 (Unauthorized)**

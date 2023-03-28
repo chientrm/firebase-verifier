@@ -34,32 +34,44 @@ const forIdTokenPublicKeys = fetch(
   authVerifier =
     (project_no: string) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      const authorization = req.header("Authorization")!,
-        jwt = authorization.split(" ")[1],
-        user = await verifyIdToken(jwt, project_no);
-      res.locals.user = user;
-      next();
+      try {
+        const authorization = req.header("Authorization")!,
+          jwt = authorization.split(" ")[1],
+          user = await verifyIdToken(jwt, project_no);
+        res.locals.user = user;
+        next();
+      } catch (_) {
+        res.sendStatus(401);
+      }
     },
   appCheckVerifier =
     (project_no: string) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      const jwt = req.header("X-Firebase-AppCheck")!,
-        device = await verifyAppCheckToken(jwt, project_no);
-      res.locals.device = device;
-      next();
+      try {
+        const jwt = req.header("X-Firebase-AppCheck")!,
+          device = await verifyAppCheckToken(jwt, project_no);
+        res.locals.device = device;
+        next();
+      } catch (_) {
+        res.sendStatus(401);
+      }
     },
   firebaseVerifier =
     ({ project_id, project_no }: { project_id: string; project_no: string }) =>
     async (req: Request, res: Response, next: NextFunction) => {
-      const authorization = req.header("Authorization")!,
-        idToken = authorization.split(" ")[1],
-        appCheckToken = req.header("X-Firebase-AppCheck")!,
-        [user, device] = await Promise.all([
-          verifyIdToken(idToken, project_id),
-          verifyAppCheckToken(appCheckToken, project_no),
-        ]);
-      res.locals.user = user;
-      res.locals.device = device;
-      next();
+      try {
+        const authorization = req.header("Authorization")!,
+          idToken = authorization.split(" ")[1],
+          appCheckToken = req.header("X-Firebase-AppCheck")!,
+          [user, device] = await Promise.all([
+            verifyIdToken(idToken, project_id),
+            verifyAppCheckToken(appCheckToken, project_no),
+          ]);
+        res.locals.user = user;
+        res.locals.device = device;
+        next();
+      } catch (_) {
+        res.sendStatus(401);
+      }
     };
 export { authVerifier, appCheckVerifier, firebaseVerifier };
