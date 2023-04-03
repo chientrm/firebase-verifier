@@ -81,4 +81,4 @@ app.listen(3000);
 
 ## Check verification
 
-If any of the verifiers failed, `res.locals.error` contains the error.
+If any of the verifiers failed, `res.locals.user`, `res.locals.device` are null and `res.locals.error` contains the error.
