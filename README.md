@@ -24,7 +24,7 @@ npm install firebase-verifier
 
 ## Configs
 
-Obtains `project_no` from [Google Cloud Console](https://console.cloud.google.com)
+Obtains `project_no` and `project_no` from [Google Cloud Console](https://console.cloud.google.com)
 
 ## Usage
 
