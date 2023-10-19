@@ -8,7 +8,7 @@
         "build": "esbuild index.ts --outfile=index.js --bundle --minify --platform=node && tsc index.ts --declaration --emitDeclarationOnly"
     },
     "devDependencies": {
-        "@types/express": "^4.17.18",
+        "@types/express": "^4.17.20",
         "esbuild": "^0.17.19",
         "jose": "^4.14.6",
         "node-fetch": "^3.3.2"
